@@ -504,6 +504,8 @@
                     "Desktop Ponies.vshost.exe.manifest",
                     "Desktop Ponies.xml",
                     "Desktop Sprites.xml",
+                    "Microsoft.DirectX.xml",
+                    "Microsoft.DirectX.Direct3D.xml"
                 })
                 {
                     var entry = zip.GetEntry(entryToRemove);

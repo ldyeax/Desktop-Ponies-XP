@@ -1,4 +1,4 @@
-Imports DesktopSprites.SpriteManagement
+﻿Imports DesktopSprites.SpriteManagement
 
 Public Enum ExitRequest
     None
@@ -211,7 +211,7 @@ Public MustInherit Class PonyAnimator
             Return
         End If
         Sort(ZOrderer)
-        If Globals.SoundAvailable Then
+        If Globals.DirectXSoundAvailable Then
             PlaySounds()
             CleanupSounds(False)
         End If
@@ -271,29 +271,24 @@ Public MustInherit Class PonyAnimator
                 End If
             End If
 
-
-            Dim output As NAudio.Wave.WaveOutEvent = Nothing
-            Dim sound As NAudio.Wave.AudioFileReader = Nothing
+            Dim audio As Microsoft.DirectX.AudioVideoPlayback.Audio = Nothing
             Try
-                output = New NAudio.Wave.WaveOutEvent()
-                sound = New NAudio.Wave.AudioFileReader(soundfulSprite.SoundPath) With {
-                    .Volume = Options.SoundVolume
+                ' Volume is between -10000 and 0, with 0 being the loudest.
+                audio = New Microsoft.DirectX.AudioVideoPlayback.Audio(soundfulSprite.SoundPath) With {
+                    .Volume = CInt(Options.SoundVolume * 10000 - 10000)
                 }
-                output.Init(sound)
-                output.Play()
+                audio.Play()
             Catch ex As Exception
                 ' Swallow any exception here. The sound file may be missing, inaccessible, not a playable format, etc.
-                If sound IsNot Nothing Then sound.Dispose()
-                If output IsNot Nothing Then output.Dispose()
+                If audio IsNot Nothing Then audio.Dispose()
             Finally
-                If sound IsNot Nothing Then
-                    If sound.TotalTime > TimeSpan.FromDays(1) Then
+                If audio IsNot Nothing AndAlso Not audio.Disposed Then
+                    If audio.Duration > TimeSpan.FromDays(1).TotalSeconds Then
                         ' Ignore sounds with a crazy duration value - they're probably corrupt and mess with our date arithmetic.
-                        sound.Dispose()
-                        output.Dispose()
+                        audio.Dispose()
                     Else
-                        activeSounds.Add((sound, output))
-                        Dim endTime = Date.UtcNow + sound.TotalTime
+                        activeSounds.Add(audio)
+                        Dim endTime = Date.UtcNow + TimeSpan.FromSeconds(audio.Duration)
                         If Options.SoundSingleChannelOnly Then
                             globalSoundEnd = endTime
                         Else
@@ -306,16 +301,14 @@ Public MustInherit Class PonyAnimator
     End Sub
 
     Private Sub CleanupSounds(force As Boolean)
-        Dim soundsToRemove As LinkedList(Of (NAudio.Wave.AudioFileReader, NAudio.Wave.WaveOutEvent)) = Nothing
+        Dim soundsToRemove As LinkedList(Of Microsoft.DirectX.AudioVideoPlayback.Audio) = Nothing
 
-        For Each activeSoundObject In activeSounds
-            Dim activeSound = DirectCast(activeSoundObject, (Sound As NAudio.Wave.AudioFileReader, Output As NAudio.Wave.WaveOutEvent))
-            If force OrElse activeSound.Sound.CurrentTime >= activeSound.Sound.TotalTime Then
-                activeSound.Output.Stop()
-                activeSound.Output.Dispose()
-                activeSound.Sound.Dispose()
-                If soundsToRemove Is Nothing Then soundsToRemove = New LinkedList(Of (NAudio.Wave.AudioFileReader, NAudio.Wave.WaveOutEvent))()
-                soundsToRemove.AddLast(activeSound)
+        For Each sound As Microsoft.DirectX.AudioVideoPlayback.Audio In activeSounds
+            If force OrElse sound.CurrentPosition >= sound.Duration Then
+                sound.StopWhenReady()
+                sound.Dispose()
+                If soundsToRemove Is Nothing Then soundsToRemove = New LinkedList(Of Microsoft.DirectX.AudioVideoPlayback.Audio)()
+                soundsToRemove.AddLast(sound)
             End If
         Next
 
@@ -355,7 +348,7 @@ Public MustInherit Class PonyAnimator
             Next
         End If
         MyBase.Finish()
-        If Not alreadyDisposed AndAlso Globals.SoundAvailable Then CleanupSounds(True)
+        If Not alreadyDisposed AndAlso Globals.DirectXSoundAvailable Then CleanupSounds(True)
     End Sub
 
     Protected Function GetClosestUnderPoint(Of T)(location As Point) As T
