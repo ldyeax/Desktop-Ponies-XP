@@ -11,17 +11,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Desktop Ponies")>
+<Assembly: AssemblyTitle("Desktop Ponies XP")>
 <Assembly: AssemblyDescription("Ponies for the Desktop!")>
-<Assembly: AssemblyCompany("DesktopPonyGuy, RoosterDragon")>
-<Assembly: AssemblyProduct("Desktop Ponies")>
+<Assembly: AssemblyCompany("DesktopPonyGuy, RoosterDragon, jimm")>
+<Assembly: AssemblyProduct("Desktop Ponies XP")>
 <Assembly: AssemblyCopyright("CC BY-NC-SA 3.0")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("e36fbb81-5c4a-46c8-ada5-e587963fae64")>
+<Assembly: Guid("e36fbb81-5c4a-46c8-ada5-e587963fae65")>
 
 ' Version information for an assembly consists of the following four values:
 '

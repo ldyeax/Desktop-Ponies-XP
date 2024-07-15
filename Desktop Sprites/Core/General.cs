@@ -1,4 +1,4 @@
-﻿namespace DesktopSprites.Core
+namespace DesktopSprites.Core
 {
     using System;
     using System.Runtime;
@@ -70,7 +70,7 @@
 #else
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            // GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             GC.Collect();
 #endif
         }

@@ -1130,6 +1130,9 @@ namespace DesktopSprites.SpriteManagement
             form.FormClosing += GraphicsForm_FormClosing;
             form.Disposed += GraphicsForm_Disposed;
 
+            // Fix text rendering bug
+            form.BackgroundGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
             lock (parameters.Item1)
                 Monitor.Pulse(parameters.Item1);
             Application.ThreadException += (sender, e) => { };
@@ -1750,6 +1753,7 @@ namespace DesktopSprites.SpriteManagement
                             bubble.X + 1, bubble.Y + 1, bubble.Width - 2, bubble.Height - 2);
                         form.BackgroundGraphics.DrawRectangle(Pens.Black,
                             bubble.X, bubble.Y, bubble.Width - 1, bubble.Height - 1);
+
                         form.BackgroundGraphics.DrawString(speakingSprite.SpeechText, font, Brushes.Black, bubble.Location);
                     }
                 }

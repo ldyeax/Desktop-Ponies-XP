@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Text
 
 Public NotInheritable Class Options
@@ -410,11 +410,12 @@ Public NotInheritable Class Options
     End Function
 
     Public Shared Function GetInterfaceType() As Type
-        If OperatingSystemInfo.IsWindows AndAlso Not Runtime.IsMono Then
-            Return GetType(DesktopSprites.SpriteManagement.WinFormSpriteInterface)
-        Else
-            Return GetType(DesktopSprites.SpriteManagement.GtkSpriteInterface)
-        End If
+        Return GetType(DesktopSprites.SpriteManagement.WinFormSpriteInterface)
+        'If OperatingSystemInfo.IsWindows AndAlso Not Runtime.IsMono Then
+        '    Return GetType(DesktopSprites.SpriteManagement.WinFormSpriteInterface)
+        'Else
+        '    Return GetType(DesktopSprites.SpriteManagement.GtkSpriteInterface)
+        'End If
     End Function
 
 End Class

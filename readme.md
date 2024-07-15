@@ -1,3 +1,10 @@
+# Desktop Ponies XP
+This is a fork of [Desktop Ponies](https://github.com/RoosterDragon/Desktop-Ponies/releases) to ensure compatibility with Windows XP. 
+
+[Download the build of Desktop Ponies XP 1.68](https://github.com/ldyeax/Desktop-Ponies-XP/releases/download/v1.68/Desktop.Ponies.XP.v1.68.zip)
+
+The original readme.md follows.
+
 # Desktop Ponies
 
 8 bit ponies on your desktop.

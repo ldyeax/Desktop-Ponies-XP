@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Desktop Sprites")]
+[assembly: AssemblyTitle("Desktop Sprites XP")]
 [assembly: AssemblyDescription("Animates desktop sprites")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Tom Roostan")]
+[assembly: AssemblyCompany("Tom Roostan, jimm")]
 [assembly: AssemblyProduct("Desktop Sprites")]
 [assembly: AssemblyCopyright("Copyright © Tom Roostan")]
 [assembly: AssemblyTrademark("")]
@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("40bc60b3-abe7-4dff-babe-781d09785705")]
+[assembly: Guid("40bc60b3-abe7-4dff-babe-781d09785706")]
 
 // Version information for an assembly consists of the following four values:
 //
